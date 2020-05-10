@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <style>
+    .enabled {
+      background: green;
+    }
+    button:focus {
+      outline: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- button types -->
+  <button id="button-chart-bar" onClick="buttonPressed('bar')" class="enabled button-chart">Bar</button>
+  <button id="button-chart-heat" onClick="buttonPressed('heat')" class="button-chart">Heat</button>
+  <button id="button-chart-lollipop" onClick="buttonPressed('lollipop')" class="button-chart">Lollipop</button>
+
+  <!-- we want to display multiple charts in a column format though -->
+  <div id="chart"></div>
+
+  <script src="d3-init.js"></script>
+  <script>
+    let selectedChart = `textband`;
+    // TODO comes from d3-init.js > . <
+    drawChart(selectedChart);
+
+    function buttonPressed(chartType) {
+      // hack: remove all enabled classes and add enabled to the selected chart type
+      const buttons = document.body.querySelectorAll(`button.button-chart`);
+      buttons.forEach(btn => btn.classList.remove(`enabled`));
+      const chartTypeButton = document.body.querySelector(`#button-chart-${chartType}`);
+      chartTypeButton.classList.add(`enabled`);
+
+      selectedChart = chartType;
+      drawChart(chartType);
+    }
+  </script>
+
+</body>
