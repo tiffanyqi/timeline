@@ -5,13 +5,6 @@
  */
 
 // TODO make these enums
-const ChartType = {
-  Bar: `bar`,
-  Heat: `heat`,
-  Lollipop: `lollipop`,
-}
-
-// enums
 const Color = {
   Primary: `green`,
   Secondary: `gray`,

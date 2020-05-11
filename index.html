@@ -13,17 +13,29 @@
   </style>
 </head>
 <body>
+  <div id="chart-app"></div>
+
   <!-- button types -->
-  <button id="button-chart-bar" onClick="buttonPressed('bar')" class="enabled button-chart">Bar</button>
+  <!-- <button id="button-chart-bar" onClick="buttonPressed('bar')" class="enabled button-chart">Bar</button>
   <button id="button-chart-heat" onClick="buttonPressed('heat')" class="button-chart">Heat</button>
-  <button id="button-chart-lollipop" onClick="buttonPressed('lollipop')" class="button-chart">Lollipop</button>
+  <button id="button-chart-lollipop" onClick="buttonPressed('lollipop')" class="button-chart">Lollipop</button> -->
 
   <!-- we want to display multiple charts in a column format though -->
   <div id="chart"></div>
 
+  <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Load components. -->
+  <script src="components/ChartButtonContainer.js"></script>
+  <script src="app.js"></script>
+
+  <!-- TODO move these to react -->
   <script src="d3-init.js"></script>
   <script>
-    let selectedChart = `textband`;
+    let selectedChart = `bar`;
     // TODO comes from d3-init.js > . <
     drawChart(selectedChart);
 
