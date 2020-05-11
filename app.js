@@ -10,6 +10,20 @@ const ChartType = {
 }
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedChartType: Object.values(ChartType)[0],
+    }
+
+    // so we get this.props to reference app's props
+    this.handleChartTypeChange = this.handleChartTypeChange.bind(this);
+  }
+
+  handleChartTypeChange(ev) {
+    this.setState({selectedChartType: ev.target.value});
+  }
+
   render() {
     return e(
       `chart-button-container`,
@@ -18,8 +32,10 @@ class App extends React.Component {
         ChartButtonContainer,
         {
           chartTypes: Object.values(ChartType),
+          selectedChartType: this.state.selectedChartType,
+          onChartTypeChange: this.handleChartTypeChange,
         },
-      )
+      ),
     )
   }
 }

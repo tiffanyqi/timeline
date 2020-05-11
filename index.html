@@ -15,11 +15,6 @@
 <body>
   <div id="chart-app"></div>
 
-  <!-- button types -->
-  <!-- <button id="button-chart-bar" onClick="buttonPressed('bar')" class="enabled button-chart">Bar</button>
-  <button id="button-chart-heat" onClick="buttonPressed('heat')" class="button-chart">Heat</button>
-  <button id="button-chart-lollipop" onClick="buttonPressed('lollipop')" class="button-chart">Lollipop</button> -->
-
   <!-- we want to display multiple charts in a column format though -->
   <div id="chart"></div>
 
@@ -38,17 +33,6 @@
     let selectedChart = `bar`;
     // TODO comes from d3-init.js > . <
     drawChart(selectedChart);
-
-    function buttonPressed(chartType) {
-      // hack: remove all enabled classes and add enabled to the selected chart type
-      const buttons = document.body.querySelectorAll(`button.button-chart`);
-      buttons.forEach(btn => btn.classList.remove(`enabled`));
-      const chartTypeButton = document.body.querySelector(`#button-chart-${chartType}`);
-      chartTypeButton.classList.add(`enabled`);
-
-      selectedChart = chartType;
-      drawChart(chartType);
-    }
   </script>
 
 </body>

@@ -3,13 +3,13 @@
 class ChartButtonContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      chartType: props.chartTypes[0],
-    }
+
+    // so we get this.props to reference app's props
+    this.handleClick = this.handleClick.bind(this); 
   }
 
-  handleClick(chartType) {
-    this.setState({chartType});
+  handleClick(ev) {
+    this.props.onChartTypeChange(ev);
   }
 
   renderChartButton(chartType) {
@@ -17,8 +17,9 @@ class ChartButtonContainer extends React.Component {
       `button`,
       {
         key: `chart-button-${chartType}`,
-        className: `chart-button`,
-        onClick: () => this.handleClick(chartType),
+        className: `chart-button ${this.props.selectedChartType === chartType ? `enabled` : ``}`,
+        value: chartType,
+        onClick: this.handleClick,
       },
       chartType,
     )
@@ -28,7 +29,7 @@ class ChartButtonContainer extends React.Component {
     return e(
       `div`,
       null,
-      this.state.chartTypes.map(chartType => this.renderChartButton(chartType)),
+      this.props.chartTypes.map(chartType => this.renderChartButton(chartType)),
     )
   }
 }
