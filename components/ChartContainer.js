@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Eventually I want this to be the wrapper of all d3 charts, and have each chart type
  * have its own initialization and type rules file
@@ -47,44 +49,78 @@ const csv = "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example
  * Italy,660
  * Israel,1263
  */
-// Parse the Data and redraw the chart
-function drawChart(selectedChart) {
-  d3.csv(csv, function(data) {
-    const dates = [
-      "04/1/2020",
-      "04/2/2020",
-      "04/3/2020",
-      "04/4/2020",
-      "04/5/2020",
-      "04/6/2020",
-      "04/7/2020",
-      "04/8/2020",
-      "04/9/2020",
-      "04/10/2020",
-    ];
-    // can just use data everywhere, this is just for date tests
-    const transformedData = data.map((d, i) => ({"Date": dates[i], ...d}));
-  
-    // TODO get these out to prevnt redrawing axes
-    // Add X axis
-    const x = d3.scaleLinear()
-      .domain([0, maxValue])
-      .range([0, width]); // scaled to width
-    svg.append("g")
-      .attr("transform", `translate(0,${height})`)
-      .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
-  
-    // Y axis
-    const y = d3.scaleBand()
-      .range([0, height])
-      .domain(transformedData.map(d => Object.values(d)[0]))
-      .padding(1);
-    svg.append("g")
-      .call(d3.axisLeft(y));
 
-    clearChart();
+class ChartContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      transformedData: null,
+      x: null,
+      y: null,
+    }
+
+    // so we get this.props to reference app's props
+    this.clearChart = this.clearChart.bind(this); 
+    this.drawChart = this.drawChart.bind(this);
+
+    this.setupChart();
+  }
+
+  componentDidUpdate() {
+    this.clearChart();
+    this.drawChart();
+  }
+
+  render() {
+    return e(
+      `chart-container`,
+      {},
+    )
+  }
+
+  setupChart() {
+    d3.csv(csv, (data) => {
+      const dates = [
+        "04/1/2020",
+        "04/2/2020",
+        "04/3/2020",
+        "04/4/2020",
+        "04/5/2020",
+        "04/6/2020",
+        "04/7/2020",
+        "04/8/2020",
+        "04/9/2020",
+        "04/10/2020",
+      ];
+      // can just use data everywhere, this is just for date tests
+      const transformedData = data.map((d, i) => ({"Date": dates[i], ...d}));
+    
+      // Add X axis
+      const x = d3.scaleLinear()
+        .domain([0, maxValue])
+        .range([0, width]); // scaled to width
+      svg.append("g")
+        .attr("transform", `translate(0,${height})`)
+        .selectAll("text")
+          .attr("transform", "translate(-10,0)rotate(-45)")
+          .style("text-anchor", "end");
+    
+      // Y axis
+      const y = d3.scaleBand()
+        .range([0, height])
+        .domain(transformedData.map(d => Object.values(d)[0]))
+        .padding(1);
+      svg.append("g")
+        .call(d3.axisLeft(y));
+
+      this.setState({transformedData, x, y});
+    });
+  }
+
+  // Parse the Data and redraw the chart
+  drawChart() {
+    const selectedChart = this.props.selectedChartType;
+    const {transformedData, x, y} = this.state;
 
     // determine which type of chart it is and display that here
     switch (selectedChart) {
@@ -166,11 +202,11 @@ function drawChart(selectedChart) {
           // Error: <line> attribute x1: Expected length, "NaN".
         break;
     }
-  });
-}
+  }
 
-function clearChart() {
-  svg.selectAll("#bar-viz").remove()
-  svg.selectAll("#heat-viz").remove()
-  svg.selectAll("#lollipop-viz").remove()
+  clearChart() {
+    svg.selectAll("#bar-viz").remove();
+    svg.selectAll("#heat-viz").remove();
+    svg.selectAll("#lollipop-viz").remove();
+  }
 }

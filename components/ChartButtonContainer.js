@@ -27,7 +27,7 @@ class ChartButtonContainer extends React.Component {
 
   render() {
     return e(
-      `div`,
+      `chart-button-container`,
       null,
       this.props.chartTypes.map(chartType => this.renderChartButton(chartType)),
     )

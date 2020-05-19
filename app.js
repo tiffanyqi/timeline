@@ -26,7 +26,7 @@ class App extends React.Component {
 
   render() {
     return e(
-      `chart-button-container`,
+      `chart-app`,
       null,
       e(
         ChartButtonContainer,
@@ -34,6 +34,12 @@ class App extends React.Component {
           chartTypes: Object.values(ChartType),
           selectedChartType: this.state.selectedChartType,
           onChartTypeChange: this.handleChartTypeChange,
+        },
+      ),
+      e(
+        ChartContainer,
+        {
+          selectedChartType: this.state.selectedChartType,
         },
       ),
     )
