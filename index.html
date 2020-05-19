@@ -13,30 +13,19 @@
   </style>
 </head>
 <body>
-  <!-- button types -->
-  <button id="button-chart-bar" onClick="buttonPressed('bar')" class="enabled button-chart">Bar</button>
-  <button id="button-chart-heat" onClick="buttonPressed('heat')" class="button-chart">Heat</button>
-  <button id="button-chart-lollipop" onClick="buttonPressed('lollipop')" class="button-chart">Lollipop</button>
+  <div id="chart-app"></div>
 
   <!-- we want to display multiple charts in a column format though -->
   <div id="chart"></div>
 
-  <script src="d3-init.js"></script>
-  <script>
-    let selectedChart = `textband`;
-    // TODO comes from d3-init.js > . <
-    drawChart(selectedChart);
+  <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 
-    function buttonPressed(chartType) {
-      // hack: remove all enabled classes and add enabled to the selected chart type
-      const buttons = document.body.querySelectorAll(`button.button-chart`);
-      buttons.forEach(btn => btn.classList.remove(`enabled`));
-      const chartTypeButton = document.body.querySelector(`#button-chart-${chartType}`);
-      chartTypeButton.classList.add(`enabled`);
-
-      selectedChart = chartType;
-      drawChart(chartType);
-    }
-  </script>
+  <!-- Load components. -->
+  <script src="components/ChartButtonContainer.js"></script>
+  <script src="components/ChartContainer.js"></script>
+  <script src="app.js"></script>
 
 </body>
